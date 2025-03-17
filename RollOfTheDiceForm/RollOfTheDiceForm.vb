@@ -2,8 +2,13 @@
 'RCET 2265
 'Spring 2025
 'Roll of the Dice Form
-'git link
+'https://github.com/rc-earnest/RollOfTheDiceForm.git
 Public Class RollOfTheDiceForm
+    ''' <summary>
+    ''' Adds tool tips and sets defaults on startup of the form.
+    ''' </summary>
+    ''' <param name="sender"></param>
+    ''' <param name="e"></param>
     Private Sub RollOfTheDiceForm_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         Me.Text = "Roll of the Dice"
         ToolTip1.SetToolTip(RollButton, "Rolls 2 dice 1,000 times and displays how many times each number was rolled.")
@@ -11,12 +16,19 @@ Public Class RollOfTheDiceForm
         ToolTip1.SetToolTip(ExitButton, "Exits the Program.")
         SetDefaults()
     End Sub
+    ''' <summary>
+    ''' Sets the defaults, made a sub so it can be called and isn't repetitive code.
+    ''' </summary>
     Sub SetDefaults()
         RollButton.Focus()
         DisplayListBox.Items.Clear()
-        DisplayListBox.Items.Add("Roll of the Dice".PadLeft(10))
+        DisplayListBox.Items.Add(StrDup(27, " ") & "Roll of the Dice")
     End Sub
-
+    ''' <summary>
+    ''' "Rolls" two dice and adds them together then displays the analytics in a list box once the roll button is clicked.
+    ''' </summary>
+    ''' <param name="sender"></param>
+    ''' <param name="e"></param>
     Private Sub RollButton_Click(sender As Object, e As EventArgs) Handles RollButton.Click
         Dim counts(10) As Integer
         Dim firstDie As Integer
@@ -25,8 +37,8 @@ Public Class RollOfTheDiceForm
         Dim header As String
         Dim data As String
         For i = 0 To 999
-            firstDie = randomNumberBetween(1, 6)
-            secondDie = randomNumberBetween(1, 6)
+            firstDie = RandomNumberBetween(1, 6)
+            secondDie = RandomNumberBetween(1, 6)
             sum = firstDie + secondDie
             counts(sum - 2) += 1
         Next
@@ -41,16 +53,29 @@ Public Class RollOfTheDiceForm
         DisplayListBox.Items.Add(data)
         DisplayListBox.Items.Add(StrDup(68, "-"))
     End Sub
-
+    ''' <summary>
+    ''' Returns to the defaults when the clear button is clicked.
+    ''' </summary>
+    ''' <param name="sender"></param>
+    ''' <param name="e"></param>
     Private Sub ClearButton_Click(sender As Object, e As EventArgs) Handles ClearButton.Click
         SetDefaults()
     End Sub
-
+    ''' <summary>
+    ''' Closes the program once the exit button is clicked.
+    ''' </summary>
+    ''' <param name="sender"></param>
+    ''' <param name="e"></param>
     Private Sub ExitButton_Click(sender As Object, e As EventArgs) Handles ExitButton.Click
         Me.Close()
     End Sub
-
-    Function randomNumberBetween(min As Integer, max As Integer) As Integer
+    ''' <summary>
+    ''' Returns a random number from your min to your max.
+    ''' </summary>
+    ''' <param name="min"></param> minimum prefered digit
+    ''' <param name="max"></param> maximum prefered digit
+    ''' <returns></returns>
+    Function RandomNumberBetween(min As Integer, max As Integer) As Integer
         Randomize()
         Dim randomNumber As Single
         randomNumber = Rnd()
